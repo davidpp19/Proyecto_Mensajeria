@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace Mensajeria.Modelos
 {
+    [PrimaryKey(nameof(MensajeId), nameof(UsuarioId))] //Usamos la anotación [PrimaryKey] para indicar que la clave primaria está compuesta por MensajeId y UsuarioId
     public class MensajeLectura
     {
-        [Key] public int MensajeId { get; set; }
-        [Key] public int UsuarioId { get; set; }
+        public int MensajeId { get; set; }
+        public int UsuarioId { get; set; }
         public DateTime Fecha_Lectura { get; set; }
 
         [ForeignKey("MensajeId")]

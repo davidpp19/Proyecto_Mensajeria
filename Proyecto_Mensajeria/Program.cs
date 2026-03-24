@@ -1,8 +1,19 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Mensajeria.API.Data;
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MensajeriaAPIContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MensajeriaAPIContext") ?? throw new InvalidOperationException("Connection string 'MensajeriaAPIContext' not found.")));
 
 // Add services to the container.
-
-builder.Services.AddControllers();
+//Indicamos que en el AddController vamos a serializar.
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
