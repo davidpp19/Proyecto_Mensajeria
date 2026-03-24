@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\API.Consumer\API.Consumer.csproj" />
+    <ProjectReference Include="..\Mensajeria.Modelos\Mensajeria.Modelos.csproj" />
+  </ItemGroup>
+
 </Project>

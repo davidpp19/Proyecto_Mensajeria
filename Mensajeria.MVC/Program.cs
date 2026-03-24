@@ -1,3 +1,15 @@
+using API.Consumer;
+using Mensajeria.Modelos;
+
+CRUD<Rol>.EndPoint = "https://localhost:7073/api/Roles";
+CRUD<EstadoMensaje>.EndPoint = "https://localhost:7073/api/EstadoMensajes";
+CRUD<Conversacion>.EndPoint = "https://localhost:7073/api/Conversaciones";
+CRUD<Usuario>.EndPoint = "https://localhost:7073/api/Usuarios";
+CRUD<Mensaje>.EndPoint = "https://localhost:7073/api/Mensajes";
+CRUD<ParticipanteConversacion>.EndPoint = "https://localhost:7073/api/ParticipantesConversacion";
+CRUD<MensajeLectura>.EndPoint = "https://localhost:7073/api/MensajeLecturas";
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
