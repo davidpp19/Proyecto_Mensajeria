@@ -11,7 +11,7 @@ namespace Mensajeria.Modelos
     {
         [Key] public int Id { get; set; }
 
-        public string Tipo_Conversacion { get; set; }
+        public Boolean Tipo_Conversacion { get; set; }
         public DateTime Fecha_Creacion_Conversacion { get; set; }
         public string Titulo_Conversacion { get; set; }
 

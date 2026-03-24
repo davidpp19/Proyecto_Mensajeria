@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="API.Consumer/API.Consumer.csproj" />
   <Project Path="Mensajeria.Modelos/Mensajeria.Modelos.csproj" />
   <Project Path="Proyecto_Mensajeria/Mensajeria.API.csproj" />
 </Solution>
