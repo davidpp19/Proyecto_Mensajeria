@@ -1,5 +1,7 @@
 using API.Consumer;
 using Mensajeria.Modelos;
+using Mensajeria.Servicios;
+using Mensajeria.Servicios.Interfaces;
 
 CRUD<Rol>.EndPoint = "https://localhost:7073/api/Roles";
 CRUD<EstadoMensaje>.EndPoint = "https://localhost:7073/api/EstadoMensajes";
@@ -14,6 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+
+builder.Services.AddAuthentication("Cookies") //cokies
+                .AddCookie("Cookies", options =>
+                {
+                    options.LoginPath = "/Account/Index"; // Ruta de inicio de sesión
+
+
+                });
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -34,6 +47,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();

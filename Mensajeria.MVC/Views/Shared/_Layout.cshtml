@@ -19,6 +19,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if(User.Identity.IsAuthenticated)
+                            {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -46,6 +48,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MensajeLecturas" asp-action="Index">Ver Mensaje Lecturas</a>
                         </li>
+                            <li class="nav-item">
+                                <span class="nav-link text-primary fw-bold">
+                                    <i class="bi bi-person-circle"></i> Hola, @User.Identity.Name
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-danger border-0">Salir</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Index">Iniciar Sesión</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

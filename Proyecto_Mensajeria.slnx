@@ -2,5 +2,6 @@
   <Project Path="API.Consumer/API.Consumer.csproj" />
   <Project Path="Mensajeria.Modelos/Mensajeria.Modelos.csproj" />
   <Project Path="Mensajeria.MVC/Mensajeria.MVC.csproj" />
+  <Project Path="Mensajeria.Servicios/Mensajeria.Servicios.csproj" Id="5b2174e5-4a91-420c-b6fb-a78b4c8597ae" />
   <Project Path="Proyecto_Mensajeria/Mensajeria.API.csproj" />
 </Solution>
