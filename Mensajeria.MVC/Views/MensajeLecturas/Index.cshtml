@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Mensajeria.Modelos.MensajeLectura>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MensajeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Lectura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoMensajeId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mensaje.Contenido_Mensaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Nombre_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Lectura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoMensaje.Descripcion_Estado)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MensajeId, id2 = item.UsuarioId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.MensajeId, id2 = item.UsuarioId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MensajeId, id2 = item.UsuarioId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

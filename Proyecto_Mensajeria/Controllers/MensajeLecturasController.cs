@@ -46,6 +46,18 @@ namespace Mensajeria.API.Controllers
             return mensajeLectura;
         }
 
+        [HttpGet("{id}/{id2}")]
+        public async Task<ActionResult<MensajeLectura>> GetMensajeLectura(int id, int id2)
+        {
+            var mensajeLectura = await _context.MensajeLectura.Include(a => a.Mensaje).Include(a => a.Usuario).Include(a => a.EstadoMensaje).FirstOrDefaultAsync(a => a.MensajeId == id && a.UsuarioId == id2);
+
+            if (mensajeLectura == null)
+            {
+                return NotFound();
+            }
+
+            return mensajeLectura;
+        }
         // PUT: api/MensajeLecturas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -77,6 +89,34 @@ namespace Mensajeria.API.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/{id2}")]
+        public async Task<IActionResult> PutMensajeLectura(int id, int id2, MensajeLectura mensajeLectura)
+        {
+            if (id != mensajeLectura.MensajeId || id2 != mensajeLectura.UsuarioId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(mensajeLectura).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MensajeLecturaExists(id, id2))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
         // POST: api/MensajeLecturas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -99,7 +139,7 @@ namespace Mensajeria.API.Controllers
                 }
             }
 
-            return CreatedAtAction("GetMensajeLectura", new { id = mensajeLectura.MensajeId }, mensajeLectura);
+            return CreatedAtAction("GetMensajeLectura", new { id = mensajeLectura.MensajeId, id2 = mensajeLectura.UsuarioId }, mensajeLectura);
         }
 
         // DELETE: api/MensajeLecturas/5
@@ -118,9 +158,29 @@ namespace Mensajeria.API.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}/{id2}")]
+        public async Task<IActionResult> DeleteMensajeLectura(int id, int id2)
+        {
+            var mensajeLectura = await _context.MensajeLectura.FindAsync(id, id2);
+            if (mensajeLectura == null)
+            {
+                return NotFound();
+            }
+
+            _context.MensajeLectura.Remove(mensajeLectura);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool MensajeLecturaExists(int id)
         {
             return _context.MensajeLectura.Any(e => e.MensajeId == id);
+        }
+
+        private bool MensajeLecturaExists(int id, int id2)
+        {
+            return _context.MensajeLectura.Any(e => e.MensajeId == id && e.UsuarioId == id2);
         }
     }
 }
