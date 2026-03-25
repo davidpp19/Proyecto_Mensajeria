@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Mensajeria.Modelos.ParticipanteConversacion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ConversacionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Ingreso_Participante)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Conversacion.Titulo_Conversacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Nombre_Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Ingreso_Participante)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { conversacionId = item.ConversacionId, usuarioId = item.UsuarioId }) |
+                    @Html.ActionLink("Details", "Details", new { conversacionId = item.ConversacionId, usuarioId = item.UsuarioId }) |
+                    @Html.ActionLink("Delete", "Delete", new { conversacionId = item.ConversacionId, usuarioId = item.UsuarioId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

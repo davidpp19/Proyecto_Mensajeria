@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Contenido_Mensaje)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Conversacion)
+                @Html.DisplayFor(modelItem => item.Conversacion.Titulo_Conversacion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Remitente)
+                @Html.DisplayFor(modelItem => item.Remitente.Nombre_Usuario)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id  }) |

@@ -43,6 +43,19 @@ namespace Mensajeria.API.Controllers
             return participanteConversacion;
         }
 
+        [HttpGet("{id}/{id2}")]
+        public async Task<ActionResult<ParticipanteConversacion>> GetParticipanteConversacion(int id, int id2)
+        {
+            var participanteConversacion = await _context.ParticipanteConversacion.Include(p => p.Conversacion).Include(p => p.Usuario).FirstOrDefaultAsync(p => p.ConversacionId == id && p.UsuarioId == id2);
+
+            if (participanteConversacion == null)
+            {
+                return NotFound();
+            }
+
+            return participanteConversacion;
+        }
+
         // PUT: api/ParticipantesConversacion/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -62,6 +75,35 @@ namespace Mensajeria.API.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!ParticipanteConversacionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}/{id2}")]
+        public async Task<IActionResult> PutParticipanteConversacion(int id, int id2, ParticipanteConversacion participanteConversacion)
+        {
+            if (id != participanteConversacion.ConversacionId || id2 != participanteConversacion.UsuarioId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(participanteConversacion).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ParticipanteConversacionExists(id, id2))
                 {
                     return NotFound();
                 }
@@ -115,9 +157,29 @@ namespace Mensajeria.API.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}/{id2}")]
+        public async Task<IActionResult> DeleteParticipanteConversacion(int id, int id2)
+        {
+            var participanteConversacion = await _context.ParticipanteConversacion.FirstOrDefaultAsync(p => p.ConversacionId == id && p.UsuarioId == id2);
+            if (participanteConversacion == null)
+            {
+                return NotFound();
+            }
+
+            _context.ParticipanteConversacion.Remove(participanteConversacion);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool ParticipanteConversacionExists(int id)
         {
             return _context.ParticipanteConversacion.Any(e => e.ConversacionId == id);
+        }
+
+        private bool ParticipanteConversacionExists(int id, int id2)
+        {
+            return _context.ParticipanteConversacion.Any(e => e.ConversacionId == id && e.UsuarioId == id2);
         }
     }
 }
