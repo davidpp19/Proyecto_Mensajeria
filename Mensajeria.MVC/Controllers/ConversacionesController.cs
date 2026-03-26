@@ -58,7 +58,7 @@ namespace Mensajeria.MVC.Controllers
             return View(conversacion);
         }
 
-        // GET: Conversaciones/SearchUsers?term=
+        // GET: Conversaciones/ aqui buscamos los usuarios para iniciar una conversacion.
         [HttpGet]
         public IActionResult SearchUsers(string term)
         {

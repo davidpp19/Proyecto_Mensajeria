@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
-namespace Libreria.MVC.Controllers
+namespace Mensajeria.MVC.Controllers
 {
     public class AccountController : Controller
     {
