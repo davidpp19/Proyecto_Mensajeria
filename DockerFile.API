@@ -6,14 +6,14 @@ ENV ASPNETCORE_URLS=http://+:8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["Mensajeria.API/Mensajeria.API.csproj", "Mensajeria.API/"]
+COPY ["Proyecto_Mensajeria/Mensajeria.API.csproj", "Proyecto_Mensajeria/"]
 COPY ["Mensajeria.Modelos/Mensajeria.Modelos.csproj", "Mensajeria.Modelos/"]
 
-RUN dotnet restore "Mensajeria.API/Mensajeria.API.csproj"
+RUN dotnet restore "Proyecto_Mensajeria/Mensajeria.API.csproj"
 
 COPY . .
 
-WORKDIR "/src/Mensajeria.API"
+WORKDIR "/src/Proyecto_Mensajeria"
 RUN dotnet build "Mensajeria.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
