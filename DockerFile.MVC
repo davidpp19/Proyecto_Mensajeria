@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY ["Mensajeria.MVC/Mensajeria.MVC.csproj", "Mensajeria.MVC/"]
+COPY ["API.Consumer/API.Consumer.csproj", "API.Consumer/"]
+COPY ["Mensajeria.Modelos/Mensajeria.Modelos.csproj", "Mensajeria.Modelos/"]
+COPY ["Mensajeria.Servicios/Mensajeria.Servicios.csproj", "Mensajeria.Servicios/"]
+
+RUN dotnet restore "Mensajeria.MVC/Mensajeria.MVC.csproj"
+
+COPY . .
+
+WORKDIR "/src/Mensajeria.MVC"
+
+RUN dotnet build "Mensajeria.MVC.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Mensajeria.MVC.csproj" -c Release -o /app/publish /p:UseAppHost=false /p:ErrorOnDuplicatePublishOutputFiles=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Mensajeria.MVC.dll"]

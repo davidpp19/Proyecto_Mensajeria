@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Elementos de la solución/">
     <File Path="DockerFile.API" />
+    <File Path="DockerFile.MVC" />
   </Folder>
   <Project Path="API.Consumer/API.Consumer.csproj" />
   <Project Path="Mensajeria.Modelos/Mensajeria.Modelos.csproj" />
