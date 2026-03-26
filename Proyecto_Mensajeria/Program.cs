@@ -10,7 +10,7 @@ builder.Services.AddDbContext<MensajeriaAPIContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MensajeriaBDD") ?? throw new InvalidOperationException("Connection string 'MensajeriaBDD' not found.")));
 
 // Add services to the container.
-//Indicamos que en el AddController vamos a serializar.
+//Indicamos que en el AddController vamos a serializar un objeto.
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

@@ -1,22 +1,178 @@
-html {
-  font-size: 14px;
+/* =========================================================
+   VARIABLES GLOBALES (Paleta: Gradiente Azul/Teal Formal, Acento Rojo, Blanco Nítido)
+   ========================================================= */
+:root {
+    /* GRADIENTE BASE PROPUESTO (Fallbacks y W3C) */
+    --color-gradiente-fallback: #0F2027;
+    --color-gradiente-start: #2C5364;
+    --color-gradiente-mid: #203A43;
+    --color-gradiente-end: #0F2027;
+    /* EFECTO CRISTAL (Glassmorphism Brillante y Pulido) */
+    --plomo-cristal-brillante: rgba(255, 255, 255, 0.1); /* Cristal claro semitransparente para brillo */
+    --plomo-oscuro: rgba(30, 30, 35, 0.95);
+    --borde-cristal-brillante: rgba(255, 255, 255, 0.35); /* Bordes definidos y brillantes */
+    /* TEXTO Y ACENTOS */
+    --metro-red: #E31837; /* Acento Rojo (Sutil para personalización) */
+    --metro-red-dark: #b8142c;
+    --texto-blanco: #ffffff; /* Letra visible */
+    --texto-negro: rgba(0,0,0,0.5)
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* =========================================================
+   FONDO GENERAL Y TEXTO (Base Gradiente Formal)
+   ========================================================= */
 body {
-  margin-bottom: 60px;
+    /* FONDO: Gradiente exacto propuesto (Reemplaza la imagen que no cuadraba) */
+    background: var(--color-gradiente-fallback); /* Fallback */
+    background: -webkit-linear-gradient(to right, var(--color-gradiente-start), var(--color-gradiente-mid), var(--color-gradiente-end));
+    background: linear-gradient(to right, var(--color-gradiente-start), var(--color-gradiente-mid), var(--color-gradiente-end)); /* W3C */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Fondo estático */
+    color: var(--texto-blanco) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
+/* =========================================================
+   TEXTOS Y ETIQUETAS (Visibilidad Absoluta - Fix Imagen 1)
+   ========================================================= */
+h1, h2, h3, h4, h5, h6, p, label, td, th, div, span, .form-text {
+    color: var(--texto-blanco) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombra sutil para mayor legibilidad */
+}
+
+h1, h2, h3 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* =========================================================
+   EFECTO CRISTAL BRILLANTE (GLASSMORPHISM)
+   ========================================================= */
+/* Aplica el efecto cristal brillante a tarjetas, formularios y barra lateral */
+.card,
+main form,
+.table-responsive,
+#chatWindow,
+.glass-container {
+    background: var(--plomo-cristal-brillante) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--borde-cristal-brillante) !important;
+    border-radius: 16px !important; /* Bordes redondeados formales */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+    padding: 30px;
+    margin-bottom: 25px;
+    transition: none !important; /* Estático por seguridad */
+}
+
+/* =========================================================
+   BARRA DE NAVEGACIÓN SUPERIOR
+   ========================================================= */
+header .navbar {
+    background: rgba(20, 20, 25, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--borde-cristal-brillante);
+}
+
+.nav-link {
+    color: var(--texto-negro) !important;
+    font-weight: 600;
+    transition: none !important;
+}
+
+    /* Estado activo o al pasar el ratón (Sin animaciones) */
+    .nav-link:hover, .nav-link.active {
+        background-color: var(--metro-red) !important;
+        color: var(--texto-blanco) !important;
+    }
+
+/* =========================================================
+   CORRECCIÓN: ALINEACIÓN FOOTER/BARRA INFERIOR (Fix Imagen 1)
+   ========================================================= */
+/* Unificamos el centrado y ancho del contenido principal y footer */
+.container-main, .container {
+    width: 100%;
+    max-width: 1140px; /* Ancho formal de Bootstrap */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Aseguramos que el footer no tape el contenido y se complete el ancho */
+footer {
+    background: var(--plomo-oscuro) !important;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--borde-cristal-brillante);
+    margin-top: auto;
+    padding: 0px 0;
+    width: 100%;
+    text-align: center;
+    position: ; /* Evita que flote sobre el login */
+}
+
+/* =========================================================
+   CONTROLES DE FORMULARIO LEGIBLES
+   ========================================================= */
+.form-control, .form-select {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid #777 !important;
+    border-radius: 10px !important;
+    color: var(--texto-blanco) !important;
+    padding: 12px 20px;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--metro-red) !important;
+        box-shadow: 0 0 0 0.25rem rgba(227, 24, 55, 0.3) !important;
+        color: var(--texto-blanco) !important;
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+/* =========================================================
+   BOTONES FORMALES (Bordes Redondos y Sin Animaciones)
+   ========================================================= */
+.btn {
+    border-radius: 50px !important;
+    font-weight: bold !important;
+    padding: 10px 28px !important;
+    border: none !important;
+    transition: none !important;
+}
+
+.btn-primary {
+    background-color: var(--metro-red) !important;
+    color: var(--texto-blanco) !important;
+}
+
+    /* Cambio de color estático y directo al pasar el mouse */
+    .btn-primary:hover {
+        background-color: var(--metro-red-dark) !important;
+    }
+
+/* =========================================================
+   TABLAS (CRUDs generados por ASP.NET)
+   ========================================================= */
+.table {
+    color: var(--texto-blanco) !important;
+}
+
+    .table th {
+        border-bottom: 2px solid var(--metro-red) !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .table td, .table th {
+        background: transparent !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
