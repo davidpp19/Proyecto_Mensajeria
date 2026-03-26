@@ -44,7 +44,7 @@
             @Html.DisplayNameFor(model => model.Estado_Usuario)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado_Usuario)
+            @(Model.Estado_Usuario ? "Activo" : "Inactivo")
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.RolId)

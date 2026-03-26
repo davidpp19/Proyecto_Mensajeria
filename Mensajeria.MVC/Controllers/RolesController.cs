@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mensajeria.MVC.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Administrador")]
     public class RolesController : Controller
     {
         // GET: RolesController

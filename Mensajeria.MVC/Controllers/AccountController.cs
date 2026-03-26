@@ -44,11 +44,15 @@ namespace Libreria.MVC.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            // Mostrar opción de crear administrador sólo si no existe ningún administrador
+            var usuarios = CRUD<Usuario>.GetAll();
+            bool existeAdmin = usuarios.Any(u => u.RolId == 1);
+            ViewBag.CanCreateAdmin = !existeAdmin;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string nombreUsuario, string email, string password)
+        public async Task<IActionResult> Register(string nombreUsuario, string email, string password, int? rolId, bool crearAdmin = false)
         {
             email = email.Trim().ToLower();
 
@@ -61,7 +65,13 @@ namespace Libreria.MVC.Controllers
                 return View();
             }
 
-            if (await _authService.Register(nombreUsuario, email, password))
+            // Si el usuario marca crearAdmin y no existe admin, asignar rol admin
+            if (crearAdmin)
+            {
+                rolId = 1; // Administrador
+            }
+
+            if (await _authService.Register(nombreUsuario, email, password, rolId))
             {
                 return RedirectToAction("Index", "Account");
             }

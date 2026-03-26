@@ -4,50 +4,159 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="d-flex" style="height:80vh;">
+    <div class="border-end" style="width:320px; overflow:auto;">
+        <div class="p-2">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Conversaciones</h5>
+                <a asp-action="Create" class="btn btn-sm btn-outline-primary">New</a>
+            </div>
+            <div class="mb-3">
+                <h6>Contactos</h6>
+                <div class="mb-2">
+                    <input id="userSearch" class="form-control form-control-sm" placeholder="Buscar usuarios..." />
+                </div>
+                <div id="usersList">
+                    @{
+                        // Mostrar solo usuarios con los que ya existe una conversación (participantes)
+                        var participantes = API.Consumer.CRUD<Mensajeria.Modelos.ParticipanteConversacion>.GetAll();
+                        var usuarios = ViewBag.Usuarios as IEnumerable<Mensajeria.Modelos.Usuario>;
+                        var currentUserId = ViewBag.CurrentUserId as int? ?? 0;
+                        var conversacionUsuarios = participantes
+                            .Where(p => p.ConversacionId != 0)
+                            .Select(p => p.UsuarioId)
+                            .Distinct()
+                            .Where(id => id != currentUserId)
+                            .ToList();
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo_Conversacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha_Creacion_Conversacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Titulo_Conversacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo_Conversacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha_Creacion_Conversacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo_Conversacion)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        if (usuarios != null)
+                        {
+                            foreach (var u in usuarios)
+                            {
+                                if (!conversacionUsuarios.Contains(u.Id)) continue;
+                                <div class="p-2 user-item border rounded mb-1" data-id="@u.Id" style="cursor:pointer;">
+                                    <div class="fw-bold">@u.Nombre_Usuario</div>
+                                    <div class="small text-muted">@u.Correo_Usuario</div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div id="conversacionesList">
+                @{
+                    var unread = ViewBag.UnreadConversationIds as List<int> ?? new List<int>();
+                }
+                @foreach (var item in Model)
+                {
+                    var title = item.Tipo_Conversacion ? item.Titulo_Conversacion : "Chat individual";
+                    var isUnread = unread.Contains(item.Id);
+                    <div class="p-2 border rounded mb-2 conversation-item" data-id="@item.Id" style="cursor:pointer;">
+                        <div class="conversation-title">@if(isUnread){<span class="fw-bold">@title</span>}else{<span>@title</span>}</div>
+                        <div class="small text-muted">@((item.Tipo_Conversacion) ? "Grupo" : "Individual") - @item.Fecha_Creacion_Conversacion.ToString("g")</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="flex-grow-1 p-3">
+        <div id="chatPane">
+            <div id="chatWindow" class="border rounded p-3" style="height:70vh; overflow:auto;">
+                <div class="text-muted">Selecciona una conversación o usuario a la izquierda para ver el chat aquí.</div>
+            </div>
+            <div id="chatComposer" class="mt-2 d-none">
+                <form id="sendForm" onsubmit="return sendMessage();">
+                    <div class="input-group">
+                        <input id="messageInput" type="text" class="form-control" placeholder="Escribir mensaje..." autocomplete="off" />
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.conversation-item').forEach(function(el) {
+        el.addEventListener('click', function() {
+            var id = this.getAttribute('data-id');
+            window.location.href = '@Url.Action("Details", "Conversaciones")' + '/' + id;
+        });
+    });
+
+    // Click en contacto para iniciar chat individual
+    function bindUserItems() {
+        document.querySelectorAll('.user-item').forEach(function(el) {
+            el.addEventListener('click', async function() {
+                var userId = parseInt(this.getAttribute('data-id'));
+                // Llamada AJAX para crear conversacion individual entre current user y userId
+                try {
+                    const payload = { Tipo_Conversacion: false, Titulo_Conversacion: null, Participantes: [userId] };
+                    const res = await fetch('@Url.Action("CreateAjax", "Conversaciones")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify(payload),
+                        credentials: 'include'
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        window.location.href = '@Url.Action("Details", "Conversaciones")' + '/' + data.id;
+                    } else {
+                        alert('Error creando conversación: ' + data.error);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Error al crear conversación');
+                }
+            });
+        });
+    }
+    bindUserItems();
+
+    // Search users
+    const userSearch = document.getElementById('userSearch');
+    if (userSearch) {
+        let timer;
+        userSearch.addEventListener('input', function() {
+            clearTimeout(timer);
+            const term = this.value.trim();
+            timer = setTimeout(async function() {
+                if (!term) return;
+                try {
+                    const res = await fetch('@Url.Action("SearchUsers", "Conversaciones")?term=' + encodeURIComponent(term), { credentials: 'include' });
+                    const list = await res.json();
+                    const usersList = document.getElementById('usersList');
+                    usersList.innerHTML = '';
+                    list.forEach(u => {
+                        const div = document.createElement('div');
+                        div.className = 'p-2 user-item border rounded mb-1';
+                        div.setAttribute('data-id', u.id);
+                        div.style.cursor = 'pointer';
+                        div.innerHTML = `<div class="fw-bold">${u.nombre_Usuario}</div><div class="small text-muted">${u.correo_Usuario}</div>`;
+                        usersList.appendChild(div);
+                    });
+                    bindUserItems();
+                } catch (err) {
+                    console.error(err);
+                }
+            }, 400);
+        });
+    }
+
+    // Envío de mensaje placeholder (a implementar)
+    window.sendMessage = function() {
+        const text = document.getElementById('messageInput').value.trim();
+        if (!text) return false;
+        // Aquí se enviaría el mensaje al backend y actualizaría el chat
+        const chatWindow = document.getElementById('chatWindow');
+        const el = document.createElement('div');
+        el.className = 'mb-2';
+        el.textContent = text;
+        chatWindow.appendChild(el);
+        document.getElementById('messageInput').value = '';
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        return false;
+    };
+    });
+</script>

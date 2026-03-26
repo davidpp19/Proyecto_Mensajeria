@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Mensajeria.MVC.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
     public class MensajeLecturasController : Controller
     {
         // GET: MensajeLecturasController

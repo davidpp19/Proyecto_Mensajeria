@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.Fecha_Creacion_Usuario)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Estado_Usuario)
+                @(item.Estado_Usuario ? "Activo" : "Inactivo")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Rol.Nombre_Rol)

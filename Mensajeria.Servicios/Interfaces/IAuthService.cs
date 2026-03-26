@@ -13,7 +13,8 @@ namespace Mensajeria.Servicios.Interfaces
         Task<bool> Register(
             string nombre,
             string email,
-            string password
+            string password,
+            int? rolId
         );
     }
 }

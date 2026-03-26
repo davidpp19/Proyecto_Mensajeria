@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Titulo_Conversacion" class="control-label"></label>
-                <input asp-for="Titulo_Conversacion" class="form-control" />
+                <input asp-for="Titulo_Conversacion" class="form-control" id="Titulo_Conversacion" />
                 <span asp-validation-for="Titulo_Conversacion" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,4 +41,21 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        // Oculta el campo Titulo si no es grupo
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipoCheckbox = document.querySelector('input[name="Tipo_Conversacion"]');
+            const titulo = document.getElementById('Titulo_Conversacion');
+            function toggleTitulo() {
+                if (tipoCheckbox.checked) {
+                    titulo.parentElement.style.display = '';
+                } else {
+                    titulo.parentElement.style.display = 'none';
+                    titulo.value = '';
+                }
+            }
+            tipoCheckbox.addEventListener('change', toggleTitulo);
+            toggleTitulo();
+        });
+    </script>
 }

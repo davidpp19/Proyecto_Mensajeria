@@ -36,7 +36,9 @@ namespace Mensajeria.Servicios
                         {
                             new Claim(ClaimTypes.Name, usuario.Nombre_Usuario),
                             new Claim(ClaimTypes.Email, usuario.Correo_Usuario),
-                            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString())
+                            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                            // Añadimos el rol del usuario como claim para autorización basada en roles
+                            new Claim(ClaimTypes.Role, usuario.Rol?.Nombre_Rol ?? (usuario.RolId == 1 ? "Administrador" : "Usuario Estándar"))
                         };
 
                         var credenciaDigital = new ClaimsIdentity(datosUsuario, "Cookies");
@@ -52,7 +54,8 @@ namespace Mensajeria.Servicios
         public async Task<bool> Register(
          string nombre,
          string email,
-         string password)
+         string password,
+         int? rolId)
         {
             //Verificamos duplicados con endpoints específicos
             var usuarioExistente = CRUD<Usuario>.GetAll()
@@ -73,7 +76,7 @@ namespace Mensajeria.Servicios
                     Nombre_Usuario = nombre,
                     Correo_Usuario = email,
                     Contrasena_Usuario = BCrypt.Net.BCrypt.HashPassword(password),
-                    RolId = 2, 
+                    RolId = rolId ?? 2, 
 
                     // Valores por defecto recomendados:
                     Estado_Usuario = true,
