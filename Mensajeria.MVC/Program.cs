@@ -3,13 +3,13 @@ using Mensajeria.Modelos;
 using Mensajeria.Servicios;
 using Mensajeria.Servicios.Interfaces;
 
-CRUD<Rol>.EndPoint = "https://localhost:7073/api/Roles";
-CRUD<EstadoMensaje>.EndPoint = "https://localhost:7073/api/EstadoMensajes";
-CRUD<Conversacion>.EndPoint = "https://localhost:7073/api/Conversaciones";
-CRUD<Usuario>.EndPoint = "https://localhost:7073/api/Usuarios";
-CRUD<Mensaje>.EndPoint = "https://localhost:7073/api/Mensajes";
-CRUD<ParticipanteConversacion>.EndPoint = "https://localhost:7073/api/ParticipantesConversacion";
-CRUD<MensajeLectura>.EndPoint = "https://localhost:7073/api/MensajeLecturas";
+CRUD<Rol>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/Roles";
+CRUD<EstadoMensaje>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/EstadoMensajes";
+CRUD<Conversacion>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/Conversaciones";
+CRUD<Usuario>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/Usuarios";
+CRUD<Mensaje>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/Mensajes";
+CRUD<ParticipanteConversacion>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/ParticipantesConversacion";
+CRUD<MensajeLectura>.EndPoint = "https://proyecto-mensajeria.onrender.com/api/MensajeLecturas";
 
 
 var builder = WebApplication.CreateBuilder(args);
