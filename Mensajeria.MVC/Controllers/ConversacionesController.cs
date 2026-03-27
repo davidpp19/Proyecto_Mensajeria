@@ -93,7 +93,7 @@ namespace Mensajeria.MVC.Controllers
                 var conversacion = new Conversacion
                 {
                     Tipo_Conversacion = request.Tipo_Conversacion,
-                    Fecha_Creacion_Conversacion = DateTime.Now,
+                    // Fecha se asigna en servidor cuando se crea (DateTime.Now)
                     Titulo_Conversacion = request.Titulo_Conversacion ?? string.Empty
                 };
                 // Antes de crear, intentar reutilizar una conversación existente con los mismos participantes
@@ -235,6 +235,8 @@ namespace Mensajeria.MVC.Controllers
         {
             try
             {
+                // establecer fecha de creación en servidor
+                conversacion.Fecha_Creacion_Conversacion = DateTime.Now;
                 var created = CRUD<Conversacion>.Create(conversacion);
                 int convId = created?.Id ?? conversacion.Id;
 

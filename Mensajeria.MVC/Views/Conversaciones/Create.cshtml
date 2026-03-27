@@ -17,11 +17,7 @@
                     <input class="form-check-input" asp-for="Tipo_Conversacion" id="isGroup" /> Hacer un grupo
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="Fecha_Creacion_Conversacion" class="control-label"></label>
-                <input asp-for="Fecha_Creacion_Conversacion" class="form-control" />
-                <span asp-validation-for="Fecha_Creacion_Conversacion" class="text-danger"></span>
-            </div>
+            @* Fecha de creación se establece automáticamente en el servidor, no mostrar input al usuario *@
             <div class="form-group">
                 <label asp-for="Titulo_Conversacion" class="control-label"></label>
                 <input asp-for="Titulo_Conversacion" class="form-control" id="Titulo_Conversacion" />
