@@ -1,47 +1,41 @@
-/* =========================================================
-   VARIABLES GLOBALES (Paleta: Gradiente Azul/Teal Formal, Acento Rojo, Blanco Nítido)
-   ========================================================= */
 :root {
-    /* GRADIENTE BASE PROPUESTO (Fallbacks y W3C) */
     --color-gradiente-fallback: #0F2027;
     --color-gradiente-start: #2C5364;
     --color-gradiente-mid: #203A43;
     --color-gradiente-end: #0F2027;
-    /* EFECTO CRISTAL (Glassmorphism Brillante y Pulido) */
-    --plomo-cristal-brillante: rgba(255, 255, 255, 0.1); /* Cristal claro semitransparente para brillo */
+    --plomo-cristal-brillante: rgba(255, 255, 255, 0.1);
     --plomo-oscuro: rgba(30, 30, 35, 0.95);
-    --borde-cristal-brillante: rgba(255, 255, 255, 0.35); /* Bordes definidos y brillantes */
-    /* TEXTO Y ACENTOS */
-    --metro-red: #E31837; /* Acento Rojo (Sutil para personalización) */
+    --borde-cristal-brillante: rgba(255, 255, 255, 0.35);
+    --metro-red: #E31837;
     --metro-red-dark: #b8142c;
-    --texto-blanco: #ffffff; /* Letra visible */
-    --texto-negro: rgba(0,0,0,0.5)
+    --texto-blanco: #ffffff;
+    --texto-negro: #000000;
 }
 
-/* =========================================================
-   FONDO GENERAL Y TEXTO (Base Gradiente Formal)
-   ========================================================= */
+
+html {
+    height: 100%;
+}
+
 body {
-    /* FONDO: Gradiente exacto propuesto (Reemplaza la imagen que no cuadraba) */
-    background: var(--color-gradiente-fallback); /* Fallback */
-    background: -webkit-linear-gradient(to right, var(--color-gradiente-start), var(--color-gradiente-mid), var(--color-gradiente-end));
-    background: linear-gradient(to right, var(--color-gradiente-start), var(--color-gradiente-mid), var(--color-gradiente-end)); /* W3C */
+    background: var(--color-gradiente-fallback);
+    background: linear-gradient(to right, var(--color-gradiente-start), var(--color-gradiente-mid), var(--color-gradiente-end));
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Fondo estático */
+    background-attachment: fixed;
     color: var(--texto-blanco) !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 0 !important; 
+    padding: 0 !important;
 }
 
-/* =========================================================
-   TEXTOS Y ETIQUETAS (Visibilidad Absoluta - Fix Imagen 1)
-   ========================================================= */
 h1, h2, h3, h4, h5, h6, p, label, td, th, div, span, .form-text {
     color: var(--texto-blanco) !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombra sutil para mayor legibilidad */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 h1, h2, h3 {
@@ -50,10 +44,13 @@ h1, h2, h3 {
     margin-bottom: 25px;
 }
 
-/* =========================================================
-   EFECTO CRISTAL BRILLANTE (GLASSMORPHISM)
-   ========================================================= */
-/* Aplica el efecto cristal brillante a tarjetas, formularios y barra lateral */
+.navbar-text a, .nav-link[title="Manage"] {
+    color: #ffcc00 !important;
+    font-weight: 800 !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9) !important;
+    text-transform: uppercase;
+}
+
 .card,
 main form,
 .table-responsive,
@@ -63,105 +60,121 @@ main form,
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid var(--borde-cristal-brillante) !important;
-    border-radius: 16px !important; /* Bordes redondeados formales */
+    border-radius: 12px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
     padding: 30px;
     margin-bottom: 25px;
-    transition: none !important; /* Estático por seguridad */
+    transition: none !important;
 }
 
-/* =========================================================
-   BARRA DE NAVEGACIÓN SUPERIOR
-   ========================================================= */
 header .navbar {
     background: rgba(20, 20, 25, 0.85) !important;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--borde-cristal-brillante);
 }
 
+.navbar-brand, .sidebar h2, .sidebar h3 {
+    text-align: center !important;
+    width: 100%;
+    display: block;
+    border-bottom: none !important;
+}
+
 .nav-link {
     color: var(--texto-negro) !important;
     font-weight: 600;
     transition: none !important;
+    border-radius: 6px;
 }
 
-    /* Estado activo o al pasar el ratón (Sin animaciones) */
     .nav-link:hover, .nav-link.active {
-        background-color: var(--metro-red) !important;
+        background-color: rgba(255, 255, 255, 0.15) !important;
         color: var(--texto-blanco) !important;
     }
 
-/* =========================================================
-   CORRECCIÓN: ALINEACIÓN FOOTER/BARRA INFERIOR (Fix Imagen 1)
-   ========================================================= */
-/* Unificamos el centrado y ancho del contenido principal y footer */
-.container-main, .container {
+.container {
+    flex: 1 0 auto !important;
     width: 100%;
-    max-width: 1140px; /* Ancho formal de Bootstrap */
+    max-width: 1140px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 40px !important; 
 }
 
-/* Aseguramos que el footer no tape el contenido y se complete el ancho */
-footer {
+footer, .footer {
     background: var(--plomo-oscuro) !important;
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--borde-cristal-brillante);
-    margin-top: auto;
-    padding: 0px 0;
+    position: relative !important;
+    bottom: auto !important;
+    flex-shrink: 0 !important; 
+
     width: 100%;
     text-align: center;
-    position: ; /* Evita que flote sobre el login */
+    padding: 20px 0 !important;
+    line-height: normal !important;
 }
 
-/* =========================================================
-   CONTROLES DE FORMULARIO LEGIBLES
-   ========================================================= */
 .form-control, .form-select {
     background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid #777 !important;
-    border-radius: 10px !important;
+    border-radius: 8px !important;
     color: var(--texto-blanco) !important;
     padding: 12px 20px;
+    transition: none !important;
 }
 
-    .form-control:focus, .form-select:focus {
-        border-color: var(--metro-red) !important;
-        box-shadow: 0 0 0 0.25rem rgba(227, 24, 55, 0.3) !important;
-        color: var(--texto-blanco) !important;
-        outline: none;
+    .form-control:focus, .form-select:focus, .form-control:hover {
+        border-color: #cccccc !important;
+        box-shadow: none !important;
+        outline: none !important;
     }
 
     .form-control::placeholder {
         color: rgba(255, 255, 255, 0.6) !important;
     }
 
-/* =========================================================
-   BOTONES FORMALES (Bordes Redondos y Sin Animaciones)
-   ========================================================= */
 .btn {
-    border-radius: 50px !important;
+    border-radius: 8px !important;
     font-weight: bold !important;
-    padding: 10px 28px !important;
+    padding: 10px 25px !important;
     border: none !important;
     transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
-.btn-primary {
+.btn-primary, .btn-success {
     background-color: var(--metro-red) !important;
     color: var(--texto-blanco) !important;
 }
 
-    /* Cambio de color estático y directo al pasar el mouse */
-    .btn-primary:hover {
+    .btn-primary:hover, .btn-success:hover {
         background-color: var(--metro-red-dark) !important;
     }
 
-/* =========================================================
-   TABLAS (CRUDs generados por ASP.NET)
-   ========================================================= */
+.btn-danger {
+    background-color: #8b0000 !important;
+}
+
+    .btn-danger:hover {
+        background-color: #660000 !important;
+    }
+
+.d-flex.gap-2 {
+    align-items: stretch !important;
+}
+
+#sendBtn {
+    margin: 0 !important;
+    border-radius: 8px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .table {
     color: var(--texto-blanco) !important;
 }
