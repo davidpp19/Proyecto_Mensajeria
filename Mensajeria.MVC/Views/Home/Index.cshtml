@@ -1,8 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5 pt-3">
+    <div class="row align-items-center mb-5 pb-4">
+        <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+      
+            <h1 class="display-4 fw-extrabold text-dark mb-4" style="font-weight: 800; line-height: 1.2;">
+                Conecta con tu equipo al instante.
+            </h1>
+            <p class="lead text-secondary mb-5" style="font-size: 1.15rem;">
+                Únete a nuestra plataforma de mensajería. Experimenta una comunicación rápida, segura y sin interrupciones. Todo lo que necesitas para mantenerte en sintonía en un solo lugar.
+            </p>
+            
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-lg-start">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <a href="/Conversaciones" class="btn btn-primary btn-lg px-5 py-3 shadow-sm fw-bold" style="border-radius: 10px;">
+                        Ir a mis mensajes
+                    </a>
+                }
+                else
+                {
+                    <a href="/Account/Register" class="btn btn-primary btn-lg px-5 py-3 shadow-sm fw-bold" style="border-radius: 10px;">
+                        Registrarse gratis
+                    </a>
+                    <a href="/Account" class="btn btn-outline-dark btn-lg px-5 py-3 shadow-sm fw-bold" style="border-radius: 10px;">
+                        Iniciar sesión
+                    </a>
+                }
+            </div>
+        </div>
+        
+        <div class="col-lg-6 d-none d-lg-flex justify-content-center">
+            <div class="position-relative">
+                <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" fill="var(--bs-primary)" class="bi bi-chat-quote-fill opacity-75" viewBox="0 0 16 16">
+                    <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M7.194 6.766a1.688 1.688 0 0 0-.227-.272 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 5.734 6C4.776 6 4 6.746 4 7.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26-.137.389-.39.804-.81 1.22a.405.405 0 0 0 .011.59c.173.16.447.155.614-.01 1.334-1.329 1.37-2.758.941-3.706a2.5 2.5 0 0 0-.227-.4zM11 9.073c-.136.389-.39.804-.81 1.22a.405.405 0 0 0 .012.59c.172.16.446.155.613-.01 1.334-1.329 1.37-2.758.942-3.706a2.5 2.5 0 0 0-.228-.4 1.7 1.7 0 0 0-.227-.273 1.5 1.5 0 0 0-.469-.324l-.008-.004A1.8 1.8 0 0 0 9.734 6C8.776 6 8 6.746 8 7.667c0 .92.776 1.666 1.734 1.666.343 0 .662-.095.931-.26z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center mt-4 pt-5 border-top border-light">
+        <div class="col-md-4 mb-4">
+            <div class="mb-3 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-lightning-charge-fill" viewBox="0 0 16 16">
+                    <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
+                </svg>
+            </div>
+            <h5 class="fw-bold">Fluidez Total</h5>
+            <p class="text-muted small">Tus mensajes llegan al instante, garantizando que el flujo de ideas nunca se detenga.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="mb-3 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-shield-lock-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5z" />
+                </svg>
+            </div>
+            <h5 class="fw-bold">Seguridad</h5>
+            <p class="text-muted small">Entorno cerrado. Solo tú y tu red comparten información.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="mb-3 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-phone-vibrate-fill" viewBox="0 0 16 16">
+                    <path d="M4 4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4zm5 7a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
+                    <path d="M1.807 4.734a.5.5 0 1 0-.884-.468A7.967 7.967 0 0 0 0 8c0 1.347.334 2.618.923 3.734a.5.5 0 1 0 .884-.468A6.967 6.967 0 0 1 1 8c0-1.18.292-2.292.807-3.266zm13.27-.468a.5.5 0 0 0-.884.468C14.708 5.708 15 6.819 15 8c0 1.18-.292 2.292-.807 3.266a.5.5 0 0 0 .884.468A7.967 7.967 0 0 0 16 8a7.967 7.967 0 0 0-.923-3.734zM3.34 6.182a.5.5 0 1 0-.93-.364A5.986 5.986 0 0 0 2 8c0 .769.145 1.505.41 2.182a.5.5 0 1 0 .93-.364A4.986 4.986 0 0 1 3 8c0-.642.12-1.258.34-1.818zm10.25-.364a.5.5 0 0 0-.93.364c.22.56.34 1.176.34 1.818 0 .642-.12 1.258-.34 1.818a.5.5 0 0 0 .93.364C13.856 9.505 14 8.769 14 8c0-.769-.145-1.505-.41-2.182z" />
+                </svg>
+            </div>
+            <h5 class="fw-bold">Diseño Intuitivo</h5>
+            <p class="text-muted small">Sin distracciones. Una interfaz limpia y enfocada totalmente en tu comodidad.</p>
+        </div>
+    </div>
 </div>
