@@ -78,7 +78,7 @@ namespace Mensajeria.Servicios
                     Contrasena_Usuario = BCrypt.Net.BCrypt.HashPassword(password),
                     RolId = rolId ?? 2, 
 
-                    // Valores por defecto recomendados:
+                    
                     Estado_Usuario = true,
                     Fecha_Creacion_Usuario = DateTime.Now
                 };
